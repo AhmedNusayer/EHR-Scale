@@ -1,10 +1,14 @@
 const hre = require("hardhat");
 
 async function main() {
-    const EHR = await hre.ethers.getContractFactory("EHR");
-    const ehr = await EHR.deploy();
-    await ehr.waitForDeployment();
-    console.log("EHR deployed to:", await ehr.getAddress());
+    // const EHR = await hre.ethers.getContractFactory("EHR"); // Load contract factory
+    const EHR = await hre.ethers.getContractFactory("RecordManagement"); // Load contract factory
+    console.log("Deploying EHR contract");
+
+    const ehr = await EHR.deploy(); // Deploy contract
+    await ehr.waitForDeployment(); // Wait for deployment confirmation
+
+    console.log("EHR deployed to:", ehr.getAddress()); // Use 'target' instead of 'getAddress()' in Ethers v6+
 }
 
 main().catch((error) => {
