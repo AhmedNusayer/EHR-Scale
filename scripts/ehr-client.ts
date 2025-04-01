@@ -9,7 +9,7 @@ const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS!; // Address of where it i
 // Connects the script to the Ethereum network (local/remote)
 const provider = new ethers.JsonRpcProvider("http://127.0.0.1:8545");
 // Account Private Key (Users have their own private keys (patient, doctor). Change it for different role)
-const wallet = new ethers.Wallet(process.env.SENDER_ACCOUNT!, provider);
+const wallet = new ethers.Wallet(process.env.SENDER_ACCOUNT_KEY!, provider);
 const ehrContract = new ethers.Contract(CONTRACT_ADDRESS, EHRArtifact.abi, wallet);
 
 async function addMedicalRecord(ipfsCID: string) {
@@ -58,7 +58,7 @@ async function main() {
 
     await addMedicalRecord("ExampleCID"); // Example IPFS CID
     await grantAccess(doctorAddress);
-    
+
     // For getting medical records as a doctor, comment the previous 2 lines. Uncomment the line below and 
     // change the wallet key to the Doctor's account key
     // await getMedicalRecords(process.env.PATIENT_ADDRESS_LOCAL!); // Fetch patient's records. Give Patient's address

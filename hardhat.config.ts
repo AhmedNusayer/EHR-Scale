@@ -23,8 +23,8 @@ const config: HardhatUserConfig = {
       accounts: ["049f69f6995a86f21f7d62cf5128e58d16fd91f35f1e1814396cca9f4a89f5eb"], // Wallet's private key
     },
     zkSyncTestnet: {
-      url: "https://testnet.era.zksync.dev",
-      ethNetwork: "holesky",
+      url: "https://sepolia.era.zksync.dev", // Correct RPC URL
+      ethNetwork: "sepolia", // Sepolia as the Ethereum L1 network
       zksync: true,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },

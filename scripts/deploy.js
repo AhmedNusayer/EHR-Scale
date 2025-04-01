@@ -8,7 +8,7 @@ async function main() {
     const ehr = await EHR.deploy(); // Deploy contract
     await ehr.waitForDeployment(); // Wait for deployment confirmation
 
-    console.log("EHR deployed to:", ehr.getAddress()); // Use 'target' instead of 'getAddress()' in Ethers v6+
+    console.log(`EHR deployed to:, ${ehr.address}`); // Use 'target' instead of 'getAddress()' in Ethers v6+
 }
 
 main().catch((error) => {
