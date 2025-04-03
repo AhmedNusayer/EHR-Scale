@@ -4,6 +4,8 @@ import "@matterlabs/hardhat-zksync"; // Import zkSync plugin
 import dotenv from "dotenv";
 
 const PRIVATE_KEY: string = process.env.WALLET_PRIVATE_KEY || "";
+const SEPOLIA_PRIVATE_KEY: string = process.env.SEPOLIA_PRIVATE_KEY || "";
+const HOLESKY_PRIVATE_KEY: string = process.env.HOLESKY_PRIVATE_KEY || "";
 
 
 const config: HardhatUserConfig = {
@@ -19,8 +21,12 @@ const config: HardhatUserConfig = {
       blockGasLimit: 12500000, // For example, reduce it from the default of 12,500,000 to 10,000,000
     },
     holesky: {
-      url: "https://ethereum-holesky.publicnode.com", // Use a public RPC
-      accounts: ["049f69f6995a86f21f7d62cf5128e58d16fd91f35f1e1814396cca9f4a89f5eb"], // Wallet's private key
+      url: process.env.HOLESKY_RPC_URL,
+      accounts: HOLESKY_PRIVATE_KEY ? [HOLESKY_PRIVATE_KEY] : [],
+    },
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL,
+      accounts: SEPOLIA_PRIVATE_KEY ? [SEPOLIA_PRIVATE_KEY] : [],
     },
     zkSyncTestnet: {
       url: "https://sepolia.era.zksync.dev", // Correct RPC URL
