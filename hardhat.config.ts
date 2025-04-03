@@ -3,6 +3,8 @@ import "@nomicfoundation/hardhat-toolbox";
 import "@matterlabs/hardhat-zksync"; // Import zkSync plugin
 import dotenv from "dotenv";
 
+dotenv.config();
+
 const PRIVATE_KEY: string = process.env.WALLET_PRIVATE_KEY || "";
 const SEPOLIA_PRIVATE_KEY: string = process.env.SEPOLIA_PRIVATE_KEY || "";
 const HOLESKY_PRIVATE_KEY: string = process.env.HOLESKY_PRIVATE_KEY || "";
