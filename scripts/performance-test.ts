@@ -1,21 +1,31 @@
 import { ethers } from "ethers";
 import { performance } from "perf_hooks";
 
-export async function runPerformanceTest(contract: ethers.Contract, numTransactions: number, batchSize: number) {
+export async function runPerformanceTest(contract: ethers.Contract, wallet: ethers.Wallet, numTransactions: number, batchSize: number) {
     console.log(`Starting performance testing on contract: ${contract}...`);
     
-    let totalGasUsed = 0n; // Use BigInt
+    let totalGasUsed = 0n;
     let totalLatency = 0;
     let successfulTx = 0;
+
+    const gasFee = {
+        maxFeePerGas: ethers.parseUnits("10", "gwei"),
+        maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
+      };
+
     const startTime = performance.now();
     
     for (let i = 0; i < numTransactions; i += batchSize) {
         let promises: Promise<any>[] = [];
         let batchStartTime = performance.now();
+        const baseNonce = await wallet.getNonce();
 
         for (let j = 0; j < batchSize; j++) {
             const recordId = ethers.id("Patient-" + (i + j));
-            promises.push(contract.addMedicalRecord(`QmExampleCID_${i}`));
+            promises.push(contract.addMedicalRecord(`ExampleCID_${recordId}`, {
+                nonce: baseNonce + j,
+                ...gasFee,
+              }));
         }
         
         let txReceipts = await Promise.all(promises.map(tx => tx.then(t => t.wait())));
@@ -28,6 +38,8 @@ export async function runPerformanceTest(contract: ethers.Contract, numTransacti
             successfulTx++;
         });
     }
+
+    console.log(successfulTx)
     
     const endTime = performance.now();
     const totalTimeSeconds = (endTime - startTime) / 1000;

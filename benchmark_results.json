@@ -1,0 +1,26 @@
+[
+  {
+    "txCount": 100,
+    "batchSize": 1,
+    "time": 34.111,
+    "tps": 0.06
+  },
+  {
+    "txCount": 100,
+    "batchSize": 25,
+    "time": 35.858,
+    "tps": 1.43
+  },
+  {
+    "txCount": 100,
+    "batchSize": 50,
+    "time": 38.4,
+    "tps": 2.43
+  },
+  {
+    "txCount": 100,
+    "batchSize": 100,
+    "time": 67.021,
+    "tps": 4.97
+  }
+]
