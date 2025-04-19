@@ -9,7 +9,7 @@ export async function runPerformanceTest(contract: ethers.Contract, wallet: ethe
     let successfulTx = 0;
 
     const gasFee = {
-        maxFeePerGas: ethers.parseUnits("10", "gwei"),
+        maxFeePerGas: ethers.parseUnits("50", "gwei"),
         maxPriorityFeePerGas: ethers.parseUnits("2", "gwei"),
       };
 
@@ -18,7 +18,7 @@ export async function runPerformanceTest(contract: ethers.Contract, wallet: ethe
     for (let i = 0; i < numTransactions; i += batchSize) {
         let promises: Promise<any>[] = [];
         let batchStartTime = performance.now();
-        const baseNonce = await wallet.getNonce();
+        let baseNonce = await wallet.provider!.getTransactionCount(wallet.address, "pending");
 
         for (let j = 0; j < batchSize; j++) {
             const recordId = ethers.id("Patient-" + (i + j));
@@ -31,6 +31,9 @@ export async function runPerformanceTest(contract: ethers.Contract, wallet: ethe
         let txReceipts = await Promise.all(promises.map(tx => tx.then(t => t.wait())));
         
         let batchEndTime = performance.now();
+
+        console.log("Batch " + i + " processed")
+
         totalLatency += (batchEndTime - batchStartTime);
 
         txReceipts.forEach(receipt => {
