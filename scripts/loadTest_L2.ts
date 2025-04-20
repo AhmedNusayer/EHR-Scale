@@ -12,9 +12,9 @@ async function main() {
 
     // Get deployed contract at the specified address
     const ehr = await new Contract(
-        process.env.L2_ZKSYNC_SEPOLIA_TESTNET_CONTACT_ADDRESS!, // Your contract address
-        ["function addMedicalRecord(string memory recordHash) public"], // ABI for the relevant function
-        wallet // Using the wallet for transaction signing
+        process.env.L2_ZKSYNC_SEPOLIA_TESTNET_CONTACT_ADDRESS!,
+        ["function addMedicalRecord(string memory recordHash) public"],
+        wallet
     );
 
     console.log("Starting Load Test...");
